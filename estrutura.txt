@@ -1,0 +1,14 @@
+/project
+  /public
+    - admin.html
+    - index.html
+    - script.js
+  /models
+    - Categoria.js
+    - Servico.js
+    - Agendamento.js
+  /routes
+    - categorias.js
+    - servicos.js
+    - agendamentos.js
+  - server.js

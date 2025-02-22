@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Administração - Salão de Beleza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .section {
+            width: 45%;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Área Administrativa</h2>
+
+<div class="container">
+    <!-- CRUD de Categorias -->
+    <div class="section">
+        <h3>Gerenciar Categorias</h3>
+        <input type="text" id="categoria-nome" placeholder="Nome da Categoria">
+        <button onclick="adicionarCategoria()">Adicionar Categoria</button>
+
+        <h4>Lista de Categorias</h4>
+        <ul id="categorias-list"></ul>
+    </div>
+
+    <!-- CRUD de Serviços -->
+    <div class="section">
+        <h3>Gerenciar Serviços</h3>
+        <input type="text" id="servico-nome" placeholder="Nome do Serviço">
+        <input type="number" id="servico-preco" placeholder="Preço">
+        <select id="servico-categoria">
+            <option value="">Selecione a Categoria</option>
+        </select>
+        <button onclick="adicionarServico()">Adicionar Serviço</button>
+
+        <h4>Lista de Serviços</h4>
+        <ul id="servicos-list"></ul>
+    </div>
+</div>
+
+<!-- Visualização de Agendamentos -->
+<h3>Agendamentos</h3>
+<table id="agendamentos-table" border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Serviço</th>
+            <th>Data</th>
+            <th>Hora</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    async function adicionarCategoria() {
+    const nome = document.getElementById('categoria-nome').value;
+    if (nome) {
+        try {
+            const response = await fetch('/api/categorias', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome })
+            });
+            const novaCategoria = await response.json();
+            carregarCategorias();  // Atualiza a lista de categorias
+        } catch (error) {
+            console.error('Erro ao adicionar categoria:', error);
+        }
+    }
+}
+
+
+async function carregarCategorias() {
+    try {
+        const response = await fetch('/api/categorias');
+        const categorias = await response.json();
+        const categoriasList = document.getElementById('categorias-list');
+        categoriasList.innerHTML = '';
+        categorias.forEach(categoria => {
+            const li = document.createElement('li');
+            li.textContent = categoria.nome;
+            categoriasList.appendChild(li);
+        });
+
+        const selectCategoria = document.getElementById('servico-categoria');
+        selectCategoria.innerHTML = '<option value="">Selecione a Categoria</option>';
+        categorias.forEach(categoria => {
+            const option = document.createElement('option');
+            option.value = categoria._id;
+            option.textContent = categoria.nome;
+            selectCategoria.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+    }
+}
+
+
+    async function adicionarServico() {
+        const nome = document.getElementById('servico-nome').value;
+        const preco = document.getElementById('servico-preco').value;
+        const categoriaId = document.getElementById('servico-categoria').value;
+
+        if (nome && preco && categoriaId) {
+            try {
+                const response = await fetch('/api/servicos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, preco, categoria_id: categoriaId })
+                });
+                carregarServicos(categoriaId);  // Atualiza a lista de serviços para a categoria
+            } catch (error) {
+                console.error('Erro ao adicionar serviço:', error);
+            }
+        }
+    }
+
+    async function carregarServicos(categoriaId) {
+        try {
+            const response = await fetch(`/api/servicos/${categoriaId}`);
+            const servicos = await response.json();
+            const servicosList = document.getElementById('servicos-list');
+            servicosList.innerHTML = '';
+            servicos.forEach(servico => {
+                const li = document.createElement('li');
+                li.textContent = `${servico.nome} - R$ ${servico.preco}`;
+                servicosList.appendChild(li);
+            });
+        } catch (error) {
+            console.error('Erro ao carregar serviços:', error);
+        }
+    }
+
+    // Carregar as categorias na inicialização da página
+    carregarCategorias();
+
+    // Carregar agendamentos
+    async function carregarAgendamentos() {
+        try {
+            const response = await fetch('/api/agendamentos');
+            const agendamentos = await response.json();
+            const tableBody = document.getElementById('agendamentos-table').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+            agendamentos.forEach(agendamento => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).textContent = agendamento.nome;
+                row.insertCell(1).textContent = agendamento.telefone;
+                row.insertCell(2).textContent = agendamento.servico_id.nome;
+                row.insertCell(3).textContent = new Date(agendamento.data).toLocaleDateString();
+                row.insertCell(4).textContent = agendamento.hora;
+            });
+        } catch (error) {
+            console.error('Erro ao carregar agendamentos:', error);
+        }
+    }
+
+    // Carregar agendamentos ao carregar a página
+    carregarAgendamentos();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento - Salão de Beleza</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<h2>Agende seu horário</h2>
+
+<form id="form-agendamento">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" id="telefone" name="telefone" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="categoria">Categoria:</label>
+    <select id="categoria" name="categoria" required>
+        <option value="">Selecione</option>
+    </select>
+
+    <label for="servico">Serviço:</label>
+    <select id="servico" name="servico" required>
+        <option value="">Selecione a categoria primeiro</option>
+    </select>
+
+    <label for="data">Data do agendamento:</label>
+    <input type="date" id="data" name="data" required>
+
+    <label for="hora">Hora do agendamento:</label>
+    <input type="time" id="hora" name="hora" required>
+
+    <button type="submit">Agendar</button>
+</form>
+
+<script src="/public/script.js"></script>
+</body>
+</html>
