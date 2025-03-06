@@ -1,0 +1,18 @@
+/project-root
+├── /controllers
+│   ├── agendamentosController.js
+│   ├── categoriasController.js
+│   ├── servicosController.js
+│   └── adminController.js
+├── /models
+│   ├── Agendamento.js
+│   ├── Categoria.js
+│   └── Servico.js
+├── /routes
+│   ├── agendamentos.js
+│   ├── categorias.js
+│   ├── servicos.js
+│   └── admin.js
+├── /public
+│   └── admin.html
+└── server.js

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento de Serviços</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-top: 20px;
+    }
+    form {
+      background-color: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 50%;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    .step-container {
+      margin-bottom: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Agendar Serviço</h1>
+  <form id="form-agendamento">
+    <!-- Etapa 1: Dados do Cliente -->
+    <div class="step-container" id="step-1">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required><br>
+
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br>
+
+      <button type="button" id="next-step-1">Próximo</button>
+    </div>
+
+    <!-- Etapa 2: Seleção de Serviço -->
+    <div class="step-container hidden" id="step-2">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" required></select><br>
+
+      <label for="servico">Serviço:</label>
+      <select id="servico" name="servico" required></select><br>
+
+      <label for="funcionario">Funcionário:</label>
+      <select id="funcionario" name="funcionario" required></select><br>
+
+      <button type="button" id="next-step-2">Próximo</button>
+    </div>
+
+    <!-- Etapa 3: Data e Hora -->
+    <div class="step-container hidden" id="step-3">
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" required><br>
+
+      <label for="hora">Hora:</label>
+      <select id="hora" name="hora" required></select><br>
+
+      <button type="submit">Agendar</button>
+    </div>
+  </form>
+
+  <h2>Pesquisar Agendamentos</h2>
+  <input type="text" id="pesquisar-nome" placeholder="Pesquisar por nome">
+  <button id="pesquisar-btn">Pesquisar</button>
+  
+  <h3>Agendamentos Encontrados</h3>
+  <table id="resultados-agendamentos">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Serviço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Resultados da pesquisa serão exibidos aqui -->
+    </tbody>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
+
+  <script>
+    // Função para inicializar o Supabase
+    function initializeSupabase() {
+      const supabaseUrl = 'https://uvhffldrihdsywhklnww.supabase.co';  // Substitua pelo seu URL
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2aGZmbGRyaWhkc3l3aGtsbnd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2OTY3NTksImV4cCI6MjA1NjI3Mjc1OX0.cTzx_PTv4Grn3BpdEiTUClhF2TSSweyvl5DjeW32GiI';  // Substitua pela sua chave pública
+      return supabase.createClient(supabaseUrl, supabaseKey);
+    }
+
+    // Função para carregar categorias
+    async function carregarCategorias() {
+      const { data, error } = await supabase.from('categorias').select('*');
+      if (error) {
+        console.error('Erro ao carregar categorias:', error);
+        return;
+      }
+      const selectCategoria = document.getElementById('categoria');
+      data.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria.id;
+        option.textContent = categoria.nome;
+        selectCategoria.appendChild(option);
+      });
+    }
+
+    // Função para carregar serviços com base na categoria selecionada
+    async function carregarServicos() {
+      const categoriaId = document.getElementById('categoria').value;
+      const { data, error } = await supabase
+        .from('servicos')
+        .select('*')
+        .eq('categoria_id', categoriaId);
+
+      if (error) {
+        console.error('Erro ao carregar serviços:', error);
+        return;
+      }
+
+      const selectServico = document.getElementById('servico');
+      selectServico.innerHTML = ''; // Limpar antes de preencher
+      data.forEach(servico => {
+        const option = document.createElement('option');
+        option.value = servico.id;
+        option.textContent = servico.nome;
+        selectServico.appendChild(option);
+      });
+    }
+
+    // Função para carregar funcionários
+    async function carregarFuncionarios() {
+      const servicoId = document.getElementById('servico').value;
+
+      if (!servicoId) {
+        console.error('Serviço não selecionado');
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('funcionarios')
+        .select('*')
+        .eq('servico_id', servicoId);
+
+      if (error) {
+        console.error('Erro ao carregar funcionários:', error);
+        return;
+      }
+
+      const selectFuncionario = document.getElementById('funcionario');
+      selectFuncionario.innerHTML = ''; // Limpar antes de preencher
+      data.forEach(funcionario => {
+        const option = document.createElement('option');
+        option.value = funcionario.id;
+        option.textContent = funcionario.nome;
+        selectFuncionario.appendChild(option);
+      });
+    }
+
+    // Função para carregar os dias disponíveis para o funcionário
+    async function carregarDiasDisponiveis() {
+      const funcionarioId = document.getElementById('funcionario').value;
+
+      if (!funcionarioId) {
+        console.error('Funcionário não selecionado');
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('funcionario_disponibilidade')
+        .select('disponibilidade')
+        .eq('funcionario_id', funcionarioId);
+
+      if (error) {
+        console.error('Erro ao carregar disponibilidade:', error);
+        return;
+      }
+
+      const diasDisponiveis = data[0].disponibilidade; // Esperando que a tabela tenha um campo 'disponibilidade' com os dias disponíveis
+      const inputData = document.getElementById('data');
+      inputData.min = new Date().toISOString().split('T')[0]; // Definir data mínima como hoje
+      inputData.value = ''; // Resetar a data
+
+      const diasDisponiveisArray = diasDisponiveis.split(','); // Supondo que a disponibilidade seja uma string separada por vírgulas
+
+      inputData.setAttribute('list', 'diasDisponiveis');
+      let optionsHtml = '';
+      diasDisponiveisArray.forEach(dia => {
+        optionsHtml += `<option value="${dia}">${dia}</option>`;
+      });
+
+      const datalist = document.createElement('datalist');
+      datalist.id = 'diasDisponiveis';
+      datalist.innerHTML = optionsHtml;
+      document.body.appendChild(datalist);
+    }
+
+    // Função de navegação entre etapas
+    document.getElementById('next-step-1').addEventListener('click', () => {
+      document.getElementById('step-1').classList.add('hidden');
+      document.getElementById('step-2').classList.remove('hidden');
+    });
+
+    document.getElementById('next-step-2').addEventListener('click', () => {
+      document.getElementById('step-2').classList.add('hidden');
+      document.getElementById('step-3').classList.remove('hidden');
+    });
+
+    window.onload = function () {
+      supabase = initializeSupabase();
+
+      // Carregar as categorias
+      carregarCategorias();
+
+      // Atualizar serviços e funcionários
+      document.getElementById('categoria').addEventListener('change', () => {
+        carregarServicos();
+      });
+      document.getElementById('servico').addEventListener('change', carregarFuncionarios);
+
+      // Atualizar dias disponíveis com base no funcionário
+      document.getElementById('funcionario').addEventListener('change', carregarDiasDisponiveis);
+
+      // Adicionar o evento de submit no formulário
+      document.getElementById('form-agendamento').addEventListener('submit', criarAgendamento);
+    }
+  </script>
+
+</body>
+</html>
