@@ -108,6 +108,19 @@ app.get('/api/servicos', async (req, res) => {
   res.json(data);
 });
 
+app.get('/api/servicos/:categoriaId', async (req, res) => {
+  const { categoriaId } = req.params;
+  const { data, error } = await supabase
+    .from('servicos')
+    .select('*')
+    .eq('categoria_id', categoriaId);
+
+  if (error) {
+    return res.status(400).json({ error: 'Erro ao carregar serviços', details: error.message });
+  }
+  res.json(data);
+});
+
 // API para adicionar um funcionário
 app.post('/api/funcionarios', async (req, res) => {
   const { nome, email, telefone, servicos } = req.body;
@@ -141,14 +154,31 @@ app.get('/api/funcionarios', async (req, res) => {
   res.json(data);
 });
 
-// API para consultar os serviços de um funcionário
-app.get('/api/funcionarios/:id/servicos', async (req, res) => {
-  const { id } = req.params;
-  const { data, error } = await supabase.from('funcionarios_servicos')
-    .select('servicos(*)')
-    .eq('funcionario_id', id);
+// API para pegar os funcionários por serviço
+app.get('/api/funcionarios/:servicoId', async (req, res) => {
+  const { servicoId } = req.params;
+  const { data, error } = await supabase
+    .from('funcionarios')
+    .select('*')
+    .eq('servico_id', servicoId);
 
-  if (error) return res.status(400).json({ error: 'Erro ao consultar serviços', details: error.message });
+  if (error) {
+    return res.status(400).json({ error: 'Erro ao carregar funcionários', details: error.message });
+  }
+  res.json(data);
+})
+
+// API para pegar horários de disponibilidade de um funcionário
+app.get('/api/horarios/:funcionarioId', async (req, res) => {
+  const { funcionarioId } = req.params;
+  const { data, error } = await supabase
+    .from('funcionario_disponibilidade')
+    .select('disponibilidade')
+    .eq('funcionario_id', funcionarioId);
+
+  if (error) {
+    return res.status(400).json({ error: 'Erro ao carregar disponibilidade', details: error.message });
+  }
   res.json(data);
 });
 

@@ -4,75 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agendamento de Serviços</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-    h1, h2 {
-      text-align: center;
-      margin-top: 20px;
-    }
-    form {
-      background-color: white;
-      padding: 20px;
-      margin: 20px auto;
-      width: 50%;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 20px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .step-container {
-      margin-bottom: 20px;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="./index.css">
 </head>
 <body>
 
   <h1>Agendar Serviço</h1>
   <form id="form-agendamento">
-    <!-- Etapa 1: Dados do Cliente -->
+    <!-- Etapa 1: Seleção de Categoria -->
     <div class="step-container" id="step-1">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" required></select><br>
+
+      <button type="button" id="next-step-1">Próximo</button>
+    </div>
+
+    <!-- Etapa 2: Seleção de Serviço -->
+    <div class="step-container hidden" id="step-2">
+      <label for="servico">Serviço:</label>
+      <select id="servico" name="servico" required></select><br>
+
+      <button type="button" id="next-step-2">Próximo</button>
+    </div>
+
+    <!-- Etapa 3: Seleção de Funcionário -->
+    <div class="step-container hidden" id="step-3">
+      <label for="funcionario">Funcionário:</label>
+      <select id="funcionario" name="funcionario" required></select><br>
+
+      <button type="button" id="next-step-3">Próximo</button>
+    </div>
+
+    <!-- Etapa 4: Seleção de Data e Hora -->
+    <div class="step-container hidden" id="step-4">
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" required><br>
+
+      <label for="hora">Hora:</label>
+      <select id="hora" name="hora" required></select><br>
+
+      <button type="button" id="next-step-4">Próximo</button>
+    </div>
+
+    <!-- Etapa 5: Dados do Cliente -->
+    <div class="step-container hidden" id="step-5">
       <label for="nome">Nome:</label>
       <input type="text" id="nome" name="nome" required><br>
 
@@ -82,73 +56,35 @@
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required><br>
 
-      <button type="button" id="next-step-1">Próximo</button>
+      <button type="button" id="next-step-5">Próximo</button>
     </div>
 
-    <!-- Etapa 2: Seleção de Serviço -->
-    <div class="step-container hidden" id="step-2">
-      <label for="categoria">Categoria:</label>
-      <select id="categoria" name="categoria" required></select><br>
+    <!-- Etapa 6: Resumo do Agendamento -->
+    <div class="step-container hidden" id="step-6">
+      <h2>Resumo do Agendamento</h2>
+      <p><strong>Categoria:</strong> <span id="resumo-categoria"></span></p>
+      <p><strong>Serviço:</strong> <span id="resumo-servico"></span></p>
+      <p><strong>Funcionário:</strong> <span id="resumo-funcionario"></span></p>
+      <p><strong>Data:</strong> <span id="resumo-data"></span></p>
+      <p><strong>Hora:</strong> <span id="resumo-hora"></span></p>
+      <p><strong>Nome:</strong> <span id="resumo-nome"></span></p>
+      <p><strong>Telefone:</strong> <span id="resumo-telefone"></span></p>
+      <p><strong>Email:</strong> <span id="resumo-email"></span></p>
 
-      <label for="servico">Serviço:</label>
-      <select id="servico" name="servico" required></select><br>
-
-      <label for="funcionario">Funcionário:</label>
-      <select id="funcionario" name="funcionario" required></select><br>
-
-      <button type="button" id="next-step-2">Próximo</button>
-    </div>
-
-    <!-- Etapa 3: Data e Hora -->
-    <div class="step-container hidden" id="step-3">
-      <label for="data">Data:</label>
-      <input type="date" id="data" name="data" required><br>
-
-      <label for="hora">Hora:</label>
-      <select id="hora" name="hora" required></select><br>
-
-      <button type="submit">Agendar</button>
+      <button type="submit">Confirmar Agendamento</button>
+      <button type="button" id="edit-step">Editar</button>
     </div>
   </form>
-
-  <h2>Pesquisar Agendamentos</h2>
-  <input type="text" id="pesquisar-nome" placeholder="Pesquisar por nome">
-  <button id="pesquisar-btn">Pesquisar</button>
-  
-  <h3>Agendamentos Encontrados</h3>
-  <table id="resultados-agendamentos">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Data</th>
-        <th>Hora</th>
-        <th>Serviço</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Resultados da pesquisa serão exibidos aqui -->
-    </tbody>
-  </table>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
 
   <script>
-    // Função para inicializar o Supabase
-    function initializeSupabase() {
-      const supabaseUrl = 'https://uvhffldrihdsywhklnww.supabase.co';  // Substitua pelo seu URL
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV2aGZmbGRyaWhkc3l3aGtsbnd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2OTY3NTksImV4cCI6MjA1NjI3Mjc1OX0.cTzx_PTv4Grn3BpdEiTUClhF2TSSweyvl5DjeW32GiI';  // Substitua pela sua chave pública
-      return supabase.createClient(supabaseUrl, supabaseKey);
-    }
-
-    // Função para carregar categorias
+    // Função para carregar categorias via API
     async function carregarCategorias() {
-      const { data, error } = await supabase.from('categorias').select('*');
-      if (error) {
-        console.error('Erro ao carregar categorias:', error);
-        return;
-      }
+      const response = await fetch('/api/categorias');
+      const categorias = await response.json();
       const selectCategoria = document.getElementById('categoria');
-      data.forEach(categoria => {
+      categorias.forEach(categoria => {
         const option = document.createElement('option');
         option.value = categoria.id;
         option.textContent = categoria.nome;
@@ -156,22 +92,14 @@
       });
     }
 
-    // Função para carregar serviços com base na categoria selecionada
+    // Função para carregar serviços via API com base na categoria
     async function carregarServicos() {
       const categoriaId = document.getElementById('categoria').value;
-      const { data, error } = await supabase
-        .from('servicos')
-        .select('*')
-        .eq('categoria_id', categoriaId);
-
-      if (error) {
-        console.error('Erro ao carregar serviços:', error);
-        return;
-      }
-
+      const response = await fetch(`/api/servicos/${categoriaId}`);
+      const servicos = await response.json();
       const selectServico = document.getElementById('servico');
       selectServico.innerHTML = ''; // Limpar antes de preencher
-      data.forEach(servico => {
+      servicos.forEach(servico => {
         const option = document.createElement('option');
         option.value = servico.id;
         option.textContent = servico.nome;
@@ -179,74 +107,90 @@
       });
     }
 
-    // Função para carregar funcionários
-    async function carregarFuncionarios() {
-      const servicoId = document.getElementById('servico').value;
+    // Função para carregar funcionários via API com base no serviço
+// Função para carregar os funcionários baseados no serviço selecionado
+async function carregarFuncionarios() {
+  const servicoId = document.getElementById('servico').value;
 
-      if (!servicoId) {
-        console.error('Serviço não selecionado');
-        return;
-      }
+  // Verificar se o ID do serviço está presente
+  if (!servicoId) {
+    console.log('Serviço não selecionado');
+    return;
+  }
 
-      const { data, error } = await supabase
-        .from('funcionarios')
-        .select('*')
-        .eq('servico_id', servicoId);
+  try {
+    // Requisição para o servidor para pegar os funcionários baseados no servico_id
+    const response = await fetch(`/api/funcionarios?servico_id=${servicoId}`); // Substitua pela sua URL real
+    if (!response.ok) {
+      const errorMessage = await response.json();
+      throw new Error(errorMessage.message || 'Erro ao carregar os funcionários');
+    }
 
-      if (error) {
-        console.error('Erro ao carregar funcionários:', error);
-        return;
-      }
+    const funcionarios = await response.json();  // Espera receber a lista de funcionários
 
-      const selectFuncionario = document.getElementById('funcionario');
-      selectFuncionario.innerHTML = ''; // Limpar antes de preencher
-      data.forEach(funcionario => {
+    // Limpar o campo de funcionários antes de adicionar novos
+    const selectFuncionario = document.getElementById('funcionario');
+    selectFuncionario.innerHTML = ''; 
+
+    // Adicionar as opções de funcionários ao select
+    if (funcionarios && funcionarios.length > 0) {
+      funcionarios.forEach(funcionario => {
         const option = document.createElement('option');
         option.value = funcionario.id;
         option.textContent = funcionario.nome;
         selectFuncionario.appendChild(option);
       });
+    } else {
+      // Caso não haja funcionários para o serviço, mostre uma mensagem ou um placeholder
+      const option = document.createElement('option');
+      option.textContent = 'Nenhum funcionário disponível';
+      selectFuncionario.appendChild(option);
     }
+  } catch (error) {
+    console.error('Erro ao carregar os funcionários:', error);
+  }
+}
 
-    // Função para carregar os dias disponíveis para o funcionário
-    async function carregarDiasDisponiveis() {
+// Chamar a função sempre que um serviço for selecionado
+document.getElementById('servico').addEventListener('change', carregarFuncionarios);
+
+
+// Chamar a função sempre que um serviço for selecionado
+document.getElementById('servico').addEventListener('change', carregarFuncionarios);
+
+
+  // Acionar a função sempre que o serviço for alterado
+  document.getElementById('servico').addEventListener('change', carregarFuncionarios);
+
+
+    // Função para carregar horários via API com base no funcionário
+    async function carregarHorariosDisponiveis() {
       const funcionarioId = document.getElementById('funcionario').value;
-
-      if (!funcionarioId) {
-        console.error('Funcionário não selecionado');
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from('funcionario_disponibilidade')
-        .select('disponibilidade')
-        .eq('funcionario_id', funcionarioId);
-
-      if (error) {
-        console.error('Erro ao carregar disponibilidade:', error);
-        return;
-      }
-
-      const diasDisponiveis = data[0].disponibilidade; // Esperando que a tabela tenha um campo 'disponibilidade' com os dias disponíveis
-      const inputData = document.getElementById('data');
-      inputData.min = new Date().toISOString().split('T')[0]; // Definir data mínima como hoje
-      inputData.value = ''; // Resetar a data
-
-      const diasDisponiveisArray = diasDisponiveis.split(','); // Supondo que a disponibilidade seja uma string separada por vírgulas
-
-      inputData.setAttribute('list', 'diasDisponiveis');
-      let optionsHtml = '';
-      diasDisponiveisArray.forEach(dia => {
-        optionsHtml += `<option value="${dia}">${dia}</option>`;
+      const response = await fetch(`/api/horarios/${funcionarioId}`);
+      const horarios = await response.json();
+      const selectHora = document.getElementById('hora');
+      selectHora.innerHTML = ''; // Limpar antes de preencher
+      horarios.forEach(hora => {
+        const option = document.createElement('option');
+        option.value = hora;
+        option.textContent = hora;
+        selectHora.appendChild(option);
       });
-
-      const datalist = document.createElement('datalist');
-      datalist.id = 'diasDisponiveis';
-      datalist.innerHTML = optionsHtml;
-      document.body.appendChild(datalist);
     }
 
-    // Função de navegação entre etapas
+    // Atualizar o resumo do agendamento
+    function atualizarResumo() {
+      document.getElementById('resumo-categoria').textContent = document.getElementById('categoria').selectedOptions[0].textContent;
+      document.getElementById('resumo-servico').textContent = document.getElementById('servico').selectedOptions[0].textContent;
+      document.getElementById('resumo-funcionario').textContent = document.getElementById('funcionario').selectedOptions[0].textContent;
+      document.getElementById('resumo-data').textContent = document.getElementById('data').value;
+      document.getElementById('resumo-hora').textContent = document.getElementById('hora').value;
+      document.getElementById('resumo-nome').textContent = document.getElementById('nome').value;
+      document.getElementById('resumo-telefone').textContent = document.getElementById('telefone').value;
+      document.getElementById('resumo-email').textContent = document.getElementById('email').value;
+    }
+
+    // Navegação entre as etapas
     document.getElementById('next-step-1').addEventListener('click', () => {
       document.getElementById('step-1').classList.add('hidden');
       document.getElementById('step-2').classList.remove('hidden');
@@ -257,10 +201,37 @@
       document.getElementById('step-3').classList.remove('hidden');
     });
 
-    window.onload = function () {
-      supabase = initializeSupabase();
+    document.getElementById('next-step-3').addEventListener('click', () => {
+      document.getElementById('step-3').classList.add('hidden');
+      document.getElementById('step-4').classList.remove('hidden');
+    });
 
-      // Carregar as categorias
+    document.getElementById('next-step-4').addEventListener('click', () => {
+      document.getElementById('step-4').classList.add('hidden');
+      document.getElementById('step-5').classList.remove('hidden');
+    });
+
+    document.getElementById('next-step-5').addEventListener('click', () => {
+      document.getElementById('step-5').classList.add('hidden');
+      document.getElementById('step-6').classList.remove('hidden');
+      atualizarResumo(); // Atualizar o resumo com as informações inseridas
+    });
+
+    // Função de envio do formulário
+    document.getElementById('form-agendamento').addEventListener('submit', (event) => {
+      event.preventDefault();
+      alert('Agendamento confirmado!');
+      // Aqui você pode salvar o agendamento no banco de dados ou fazer qualquer outra ação necessária
+    });
+
+    // Função para voltar e editar
+    document.getElementById('edit-step').addEventListener('click', () => {
+      document.getElementById('step-6').classList.add('hidden');
+      document.getElementById('step-5').classList.remove('hidden');
+    });
+
+    window.onload = function () {
+      // Carregar categorias
       carregarCategorias();
 
       // Atualizar serviços e funcionários
@@ -268,13 +239,8 @@
         carregarServicos();
       });
       document.getElementById('servico').addEventListener('change', carregarFuncionarios);
-
-      // Atualizar dias disponíveis com base no funcionário
-      document.getElementById('funcionario').addEventListener('change', carregarDiasDisponiveis);
-
-      // Adicionar o evento de submit no formulário
-      document.getElementById('form-agendamento').addEventListener('submit', criarAgendamento);
-    }
+      document.getElementById('funcionario').addEventListener('change', carregarHorariosDisponiveis);
+    };
   </script>
 
 </body>
