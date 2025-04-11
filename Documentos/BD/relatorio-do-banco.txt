@@ -1,0 +1,123 @@
+Relatório Detalhado do Banco de Dados: Sistema de Agendamentos
+1. Tabela categoria
+Objetivo: Armazenar as categorias dos serviços oferecidos.
+
+Campos:
+
+id_categoria (INT, PK): Identificador único da categoria.
+
+nome_categoria (VARCHAR(255)): Nome da categoria, como "Corte de cabelo", "Massagem", etc.
+
+2. Tabela funcionarios
+Objetivo: Armazenar informações sobre os funcionários que realizam os serviços.
+
+Campos:
+
+id_funcionario (INT, PK): Identificador único do funcionário.
+
+nome_funcionario (VARCHAR(255)): Nome completo do funcionário.
+
+telefone_funcionario (VARCHAR(20)): Número de telefone do funcionário.
+
+email_funcionario (VARCHAR(255), UNIQUE): Endereço de e-mail do funcionário (opcional e único).
+
+created_at (TIMESTAMP): Data e hora de criação do registro.
+
+updated_at (TIMESTAMP): Data e hora da última atualização do registro.
+
+3. Tabela servicos
+Objetivo: Armazenar os serviços disponíveis para agendamento.
+
+Campos:
+
+id_servico (INT, PK): Identificador único do serviço.
+
+id_categoria (INT, FK): Relacionamento com a tabela categoria. Identifica a categoria à qual o serviço pertence.
+
+nome_servico (VARCHAR(255)): Nome do serviço, como "Corte de cabelo", "Massagem relaxante", etc.
+
+valor_servico (DECIMAL(10, 2)): Valor do serviço.
+
+imagem (VARCHAR(255)): URL da imagem que representa o serviço (caso necessário).
+
+duracao_servico (INT): Duração do serviço em minutos.
+
+4. Tabela servico_funcionario
+Objetivo: Relacionar os serviços com os funcionários que podem realizá-los.
+
+Campos:
+
+id_servico_funcionario (INT, PK): Identificador único dessa relação.
+
+id_servico (INT, FK): Relacionamento com a tabela servicos, identificando o serviço oferecido.
+
+id_funcionario (INT, FK): Relacionamento com a tabela funcionarios, identificando o funcionário que pode realizar o serviço.
+
+inicio_servico (TIMESTAMP): Data de início de disponibilidade do funcionário para realizar o serviço.
+
+fim_servico (TIMESTAMP, NULLABLE): Data de término da disponibilidade, caso o funcionário pare de oferecer aquele serviço em algum momento.
+
+5. Tabela agendamentos
+Objetivo: Armazenar os agendamentos realizados pelos clientes.
+
+Campos:
+
+id_agendamento (INT, PK): Identificador único do agendamento.
+
+nome_cliente (VARCHAR(255)): Nome completo do cliente que fez o agendamento.
+
+telefone_cliente (VARCHAR(20)): Número de telefone do cliente.
+
+email_cliente (VARCHAR(255), NULLABLE): E-mail do cliente (opcional).
+
+id_servico (INT, FK): Relacionamento com a tabela servicos, identificando qual serviço foi agendado.
+
+id_funcionario (INT, FK): Relacionamento com a tabela funcionarios, identificando o funcionário que realizará o serviço.
+
+data_agendada (DATE): Data do agendamento.
+
+horario_agendado (TIME): Hora marcada para o agendamento.
+
+status (VARCHAR(20)): Status do agendamento. Os possíveis valores são: pendente, cancelado, concluído.
+
+created_at (TIMESTAMP): Data e hora de criação do agendamento.
+
+updated_at (TIMESTAMP): Data e hora da última atualização do agendamento.
+
+6. Tabela horarios_indisponiveis
+Objetivo: Armazenar horários específicos em que o funcionário não está disponível para agendamentos (exemplo: feriados, férias, folgas).
+
+Campos:
+
+id_horario (INT, PK): Identificador único do horário indisponível.
+
+id_funcionario (INT, FK): Relacionamento com a tabela funcionarios, identificando o funcionário.
+
+data_hora_indisponivel (TIMESTAMP): Data e hora exata em que o funcionário não está disponível.
+
+Triggers
+1. Trigger verificar_horario_disponivel
+Objetivo: Garantir que não haja conflitos de horário ao tentar realizar um agendamento.
+
+Lógica: Antes de inserir um novo agendamento, essa trigger verifica se o horário escolhido já está ocupado por outro agendamento ou se está marcado como indisponível.
+
+Caso o horário esteja ocupado, gera uma exceção.
+
+Caso o horário esteja na tabela de horários indisponíveis, gera uma exceção.
+
+2. Trigger antes_inserir_agendamento
+Objetivo: Acionar a função de verificação de disponibilidade antes de inserir um agendamento.
+
+Quando é acionada: Sempre que um novo agendamento é tentado inserir na tabela agendamentos.
+
+3. Trigger atualizar_data_hora
+Objetivo: Atualizar os campos updated_at de registros nas tabelas agendamentos e funcionarios.
+
+Quando é acionada: Sempre que um registro nas tabelas agendamentos ou funcionarios é atualizado.
+
+Considerações Finais
+Cancelamento de Agendamentos: O status do agendamento pode ser alterado para "cancelado" quando um cliente ou administrador cancelar o agendamento. Isso permite manter um histórico de todos os agendamentos, sejam eles concluídos ou cancelados.
+
+Horários de Funcionário: Como todos os funcionários possuem horários padrão de 24 horas, a tabela de horarios_indisponiveis pode ser utilizada para bloquear horários específicos quando necessário.
+
+Controle de Concorrência: A trigger verificar_horario_disponivel é fundamental para evitar a duplicação de horários para o mesmo funcionário, garantindo que um horário só seja reservado para um agendamento.

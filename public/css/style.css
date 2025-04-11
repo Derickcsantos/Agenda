@@ -1,0 +1,218 @@
+/* Estilos gerais do corpo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+/* Estilos para formulários */
+form {
+    max-width: 500px;
+    margin: auto;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+}
+
+/* Estilos para botões */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#loginBtn, #agendarBtn {
+    border-radius: 15px;
+    border: 1px solid #fff;
+    background-color: #94117d;
+}
+
+#loginBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+/* Estilos para listas e ações */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions button {
+    background-color: #f44336;
+    margin-left: 5px;
+}
+
+.actions button:hover {
+    background-color: #e53935;
+}
+
+.actions button.edit {
+    background-color: #2196F3;
+}
+
+.actions button.edit:hover {
+    background-color: #1976D2;
+}
+
+/* Estilos para tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Estilos para seções */
+section {
+    margin-bottom: 30px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal button {
+    margin-top: 10px;
+}
+
+/* Estilos adicionais para o Modal (se necessário) */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Estilos para o Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo escuro */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+}
+
+/* Estilo para o modal */
+.modal {
+    display: none; /* Ocultar por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    padding-top: 60px;
+  }
+  
+  .modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+  }
+  
+  .modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .modal-close:hover,
+  .modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  

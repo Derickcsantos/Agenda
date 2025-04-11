@@ -1,0 +1,195 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+form {
+  background-color: white;
+  padding: 30px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 14px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.step-container {
+  margin: 20px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+#form-agendamento {
+  width: 80%;
+  margin: 0 auto;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: block;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"] {
+  font-size: 16px;
+}
+
+select {
+  font-size: 16px;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 20px;
+  color: #333;
+  margin-top: 30px;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+#next-step-1, #next-step-2, #next-step-3, #next-step-4, #next-step-5 {
+  background-color: #007BFF;
+  margin-top: 10px;
+}
+
+#next-step-1:hover, #next-step-2:hover, #next-step-3:hover, #next-step-4:hover, #next-step-5:hover {
+  background-color: #0056b3;
+}
+
+#next-step-1:active, #next-step-2:active, #next-step-3:active, #next-step-4:active, #next-step-5:active {
+  transform: scale(0.98);
+}
+
+#next-step-1, #next-step-2, #next-step-3, #next-step-4, #next-step-5 {
+  border-radius: 8px;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+#next-step-1:hover, #next-step-2:hover, #next-step-3:hover, #next-step-4:hover, #next-step-5:hover {
+  background-color: #0056b3;
+}
+
+#next-step-1:active, #next-step-2:active, #next-step-3:active, #next-step-4:active, #next-step-5:active {
+  transform: scale(0.98);
+}
+
+#edit-step {
+  background-color: #f0ad4e;
+}
+
+#edit-step:hover {
+  background-color: #ec971f;
+}
+
+#edit-step:active {
+  transform: scale(0.98);
+}
+
+.hora-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.hora-item {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 80px;
+  text-align: center;
+}
+
+.hora-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.hora-item.selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.hora-item:active {
+  background-color: #0056b3;
+}

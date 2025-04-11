@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Salão de Beleza</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form id="login-form">
+    <label for="usuario">Usuário:</label>
+    <input type="text" id="usuario" name="usuario" required>
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha" required>
+
+    <button type="submit">Entrar</button>
+</form>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const usuario = document.getElementById('usuario').value;
+        const senha = document.getElementById('senha').value;
+
+        // Fazendo a requisição para o servidor para verificar os dados de login
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ usuario, senha }) // Envia os dados de login para o servidor
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Login realizado com sucesso') {
+                window.location.href = '/admin'; // Redireciona para a página de administração
+            } else {
+                alert('Usuário ou senha incorretos.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao tentar fazer login');
+        });
+    });
+</script>
+
+</body>
+</html>

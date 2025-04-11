@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <h1>Painel Administrativo</h1>
+
+  <!-- Gerenciamento de Categorias -->
+  <section>
+    <h2>Categorias</h2>
+    <button id="btn-add-categoria">Adicionar Categoria</button>
+    <ul id="lista-categorias"></ul>
+  </section>
+
+  <!-- Gerenciamento de Serviços -->
+  <section>
+    <h2>Serviços</h2>
+    <button id="btn-add-servico">Adicionar Serviço</button>
+    <ul id="lista-servicos"></ul>
+  </section>
+
+  <!-- Gerenciamento de Funcionários -->
+  <section>
+    <h2>Funcionários</h2>
+    <button id="btn-add-funcionario">Adicionar Funcionário</button>
+    <ul id="lista-funcionarios"></ul>
+  </section>
+
+  <section>
+    <h2>Serviços por Funcionário</h2>
+    <button id="btn-add-servico-funcionario">Adicionar Serviço ao Funcionário</button>
+    <ul id="lista-servicos-funcionario"></ul>
+  </section>
+
+  <!-- Gerenciamento de Agendamentos -->
+  <section>
+    <h2>Agendamentos</h2>
+    <button id="btn-pesquisar-agendamentos">Pesquisar Agendamentos</button>
+    <table id="tabela-agendamentos" style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Nome Cliente</th>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="lista-agendamentos">
+        <!-- Os agendamentos serão inseridos aqui -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Definir Horários de Funcionamento -->
+  <section>
+    <h2>Horários de Funcionamento</h2>
+    <button id="btn-definir-horarios">Definir Horários</button>
+    <ul id="lista-horarios"></ul>
+  </section>
+
+  <!-- Modal de Edição -->
+  <div id="modal-editar" class="modal">
+    <div class="modal-content">
+      <h2>Editar</h2>
+      <form id="form-editar">
+        <!-- Campos Dinâmicos Serão Preenchidos Aqui -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="preco">Preço:</label>
+        <input type="text" id="preco" name="preco">
+
+        <label for="duracao">Duração (em minutos):</label>
+        <input type="number" id="duracao" name="duracao">
+
+        <label for="categoria_id">Categoria ID:</label>
+        <input type="text" id="categoria_id" name="categoria_id">
+
+        <label for="imagem_url">Imagem URL:</label>
+        <input type="text" id="imagem_url" name="imagem_url">
+
+        <button type="submit">Salvar</button>
+        <button type="button" id="btn-fechar-modal">Fechar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar categoria -->
+  <div id="modal-categoria" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Adicionar Categoria</h2>
+      <label for="categoria-nome">Nome:</label>
+      <input type="text" id="categoria-nome" placeholder="Nome da nova categoria">
+      <button id="confirmar-categoria">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar serviço -->
+  <div id="modal-servico" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Adicionar Serviço</h2>
+      <label for="servico-nome">Nome:</label>
+      <input type="text" id="servico-nome" placeholder="Nome do serviço">
+      <label for="servico-preco">Preço:</label>
+      <input type="number" id="servico-preco" placeholder="Preço">
+      <label for="servico-duracao">Duração (em minutos):</label>
+      <input type="number" id="servico-duracao" placeholder="Duração">
+      <label for="servico-categoria">Categoria ID:</label>
+      <input type="number" id="servico-categoria" placeholder="ID da categoria">
+      <label for="servico-imagem">Imagem URL (opcional):</label>
+      <input type="text" id="servico-imagem" placeholder="Imagem URL">
+      <button id="confirmar-servico">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar funcionário -->
+  <div id="modal-funcionario" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Adicionar Funcionário</h2>
+      <label for="funcionario-nome">Nome:</label>
+      <input type="text" id="funcionario-nome" placeholder="Nome do funcionário">
+      <label for="funcionario-email">Email:</label>
+      <input type="email" id="funcionario-email" placeholder="Email">
+      <label for="funcionario-telefone">Telefone:</label>
+      <input type="text" id="funcionario-telefone" placeholder="Telefone">
+      <button id="confirmar-funcionario">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar serviço ao funcionário -->
+  <div id="modal-servico-funcionario" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Adicionar Serviço ao Funcionário</h2>
+      <label for="funcionario-id">ID do Funcionário:</label>
+      <input type="number" id="funcionario-id" placeholder="ID do funcionário">
+      <label for="servico-id">ID do Serviço:</label>
+      <input type="number" id="servico-id" placeholder="ID do serviço">
+      <button id="confirmar-servico-funcionario">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- Modal para editar serviço de um funcionário -->
+  <div id="modal-editar-servico-funcionario" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Editar Serviço do Funcionário</h2>
+      <form id="form-editar-servico-funcionario">
+        <label for="servico-nome">Nome:</label>
+        <input type="text" id="servico-nome" name="servico-nome" required>
+        <label for="servico-preco">Preço:</label>
+        <input type="number" id="servico-preco" name="servico-preco" required>
+        <label for="servico-duracao">Duração (em minutos):</label>
+        <input type="number" id="servico-duracao" name="servico-duracao" required>
+        <button type="submit">Salvar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./js/dashboard.js"></script>
+  <script src="./js/gestao.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento de Serviços</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <h1>Agendar Serviço</h1>
+  <form id="form-agendamento">
+    <!-- Etapa 1: Seleção de Categoria -->
+    <div class="step-container" id="step-1">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" required></select><br>
+      <button type="button" id="next-step-1">Próximo</button>
+    </div>
+
+    <!-- Etapa 2 -->
+    <div class="step-container hidden" id="step-2">
+      <label for="servico">Serviço:</label>
+      <select id="servico" name="servico" required></select><br>
+      <button type="button" id="back-step-2">Voltar</button>
+      <button type="button" id="next-step-2">Próximo</button>
+    </div>
+
+    <!-- Etapa 3 -->
+    <div class="step-container hidden" id="step-3">
+      <label for="funcionario">Funcionário:</label>
+      <select id="funcionario" name="funcionario" required></select><br>
+      <button type="button" id="back-step-3">Voltar</button>
+      <button type="button" id="next-step-3">Próximo</button>
+    </div>
+
+    <!-- Etapa 4 -->
+    <div class="step-container hidden" id="step-4">
+      <label for="data">Data:</label>
+      <input type="text" id="data" name="data" required class="flatpickr"><br>
+      <button type="button" id="back-step-4">Voltar</button>
+      <button type="button" id="next-step-4">Próximo</button>
+    </div>
+
+    <!-- Etapa 5 -->
+    <div class="step-container hidden" id="step-5">
+      <label for="hora">Hora:</label>
+      <div id="hora" class="hora-lista" role="listbox" aria-labelledby="hora-label"></div><br>
+      <button type="button" id="back-step-5">Voltar</button>
+      <button type="button" id="next-step-5">Próximo</button>
+    </div>
+
+    <!-- Etapa 6 -->
+    <div class="step-container hidden" id="step-6">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required><br>
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required><br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required><br>
+      <button type="button" id="back-step-6">Voltar</button>
+      <button type="button" id="next-step-6">Próximo</button>
+    </div>
+
+    <!-- Etapa 7 -->
+    <div class="step-container hidden" id="step-7">
+      <h2>Resumo do Agendamento</h2>
+      <p><strong>Categoria:</strong> <span id="resumo-categoria"></span></p>
+      <p><strong>Serviço:</strong> <span id="resumo-servico"></span></p>
+      <p><strong>Funcionário:</strong> <span id="resumo-funcionario"></span></p>
+      <p><strong>Data:</strong> <span id="resumo-data"></span></p>
+      <p><strong>Hora:</strong> <span id="resumo-hora"></span></p>
+      <p><strong>Nome:</strong> <span id="resumo-nome"></span></p>
+      <p><strong>Telefone:</strong> <span id="resumo-telefone"></span></p>
+      <p><strong>Email:</strong> <span id="resumo-email"></span></p>
+      <button type="submit">Confirmar Agendamento</button>
+      <button type="button" id="back-step-7">Voltar</button>
+    </div>
+
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.0/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+  <script src="./js/index.js"></script>
+</body>
+</html>

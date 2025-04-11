@@ -1,0 +1,28 @@
+/project-root
+├── /assets
+├── /controllers
+├── /models
+├── /node_modules
+├── /public
+│   ├── admin.html
+│   ├── dashboard.js
+│   ├── index.css
+│   ├── index.html
+│   ├── login.html
+│   ├── script.js
+│   └── style.css
+├── /routes
+│   ├── admin.js
+│   ├── agendamentos.js
+│   ├── categorias.js
+│   ├── login.js
+│   └── servicos.js
+├── /views
+├── .env
+├── .gitignore
+├── documentacao.txt
+├── estrutura.txt
+├── package-lock.json
+├── package.json
+├── server.js
+└── vercel.json
