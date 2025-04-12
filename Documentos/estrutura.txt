@@ -1,28 +1,37 @@
-/project-root
-├── /assets
-├── /controllers
-├── /models
-├── /node_modules
-├── /public
+Agenda/
+├── controllers/
+│   ├── adminController.js
+│   ├── agendamentosController.js
+│   ├── categoriasController.js
+│   ├── funcionariosController.js
+│   ├── horariosController.js
+│   └── servicosController.js
+├── Documentos/
+├── models/
+├── node_modules/
+├── public/
+│   ├── css/
+│   │   ├── index.css
+│   │   └── style.css
+│   ├── js/
+│   │   ├── dashboard.js
+│   │   ├── gestao.js
+│   │   ├── index.js
+│   │   ├── script.js
 │   ├── admin.html
-│   ├── dashboard.js
-│   ├── index.css
 │   ├── index.html
-│   ├── login.html
-│   ├── script.js
-│   └── style.css
-├── /routes
+│   └── login.html
+├── routes/
 │   ├── admin.js
-│   ├── agendamentos.js
-│   ├── categorias.js
+│   ├── agendamentosRoutes.js
+│   ├── categoriasRoute.js
+│   ├── funcionariosRoutes.js
 │   ├── login.js
-│   └── servicos.js
-├── /views
+│   ├── servicos.js
+│   └── servicosRoutes.js
 ├── .env
-├── .gitignore
-├── documentacao.txt
-├── estrutura.txt
+├── LICENSE
 ├── package-lock.json
 ├── package.json
-├── server.js
-└── vercel.json
+├── README.md
+└── server.js
